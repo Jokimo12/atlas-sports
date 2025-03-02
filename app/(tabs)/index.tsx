@@ -2,6 +2,7 @@ import { Text,Image, StyleSheet, Platform, View, TextInput, TouchableOpacity, Bu
 declare module 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/Feather';
 import {useState } from 'react';
+import { useRouter } from 'expo-router';
 import * as Google from 'expo-auth-session/providers/google';
 import * as WebBrowser from 'expo-web-browser';
 
@@ -9,6 +10,7 @@ import * as WebBrowser from 'expo-web-browser';
 
 
 export default function HomeScreen() {
+  const router = useRouter();
 
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -80,9 +82,9 @@ export default function HomeScreen() {
         <Text style={styles.buttonText}>Sign Up with Google</Text>
       </TouchableOpacity>
       </View>
-      <View style={styles.alt}>
+      <TouchableOpacity style={styles.alt} onPress={() => router.push('/login')}>
         <Text>Already have an account? Login</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
