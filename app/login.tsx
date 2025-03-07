@@ -1,7 +1,10 @@
 
 import { View, Text, StyleSheet, Image, TextInput, Button, Touchable, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
 
 const LoginScreen = () => {
+    const router = useRouter();
+
     return(
         <View style={styles.container}>
         
@@ -24,8 +27,8 @@ const LoginScreen = () => {
 
                 </TextInput>
             </View>
-
-            <TouchableOpacity style={styles.loginButton}>
+            {/* Login button currently goes straight to home without authenticating */}
+            <TouchableOpacity style={styles.loginButton} onPress={() => router.push('/(tabs)')}>
                 <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>
         </View>
