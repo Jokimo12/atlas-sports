@@ -16,7 +16,7 @@ export default function SignUp() {
   return (
     <View style={styles.firstpage}>
       <View style={styles.logo}>
-        <Image source = {require('../../assets/images/atlas-sports-logo-crop.webp')} style={{ width: 230, height: 230 }}></Image>
+        <Image source = {require('../assets/images/atlas-sports-logo-crop.webp')} style={{ width: 230, height: 230 }}></Image>
       </View>
       <View>
         <Text style={styles.header}>Sign Up</Text>
@@ -71,7 +71,7 @@ export default function SignUp() {
       <TouchableOpacity style={styles.button} onPress={() => console.log('Google Sign Up')}>
         {/* Google Icon */}
         <Image
-          source={require('../../assets/images/google-icon.webp')} // Ensure the image is in your assets folder
+          source={require('../assets/images/google-icon.webp')} // Ensure the image is in your assets folder
           style={styles.icon}
         />
         {/* Button Text */}
