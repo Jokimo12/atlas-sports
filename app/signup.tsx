@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   logo: {
-    marginTop: 65,
+    marginTop: 10,
     marginBottom: 0,
   },
   header: {
