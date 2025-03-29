@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, Image, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter, usePathname } from 'expo-router';
 
 // Example teams data
 const teams = [
@@ -21,6 +22,9 @@ const headerHeight = screenHeight * 0.2; // 20% of screen height instead of 25%
 
 const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const router = useRouter();
+    const pathname = usePathname();
+    const isCalendarScreen = pathname === '/calendar';
 
     const selectedTeam = teams.find(team => team.name === currentTeam) || teams[0];
 
@@ -57,6 +61,17 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
                 />
                 <Text style={styles.currentTeamName}>{selectedTeam.name}</Text>
             </View>
+
+            <TouchableOpacity 
+                style={styles.calendarButton}
+                onPress={() => router.push(isCalendarScreen ? '/(tabs)' : 'calendar' as any)}
+            >
+                <Ionicons 
+                    name={isCalendarScreen ? "home" : "calendar"} 
+                    size={24} 
+                    color="#000" 
+                />
+            </TouchableOpacity>
 
             <Modal
                 visible={isDropdownVisible}
@@ -123,6 +138,12 @@ const styles = StyleSheet.create({
     currentTeamName: {
         fontSize: 24,
         fontWeight: '600',
+    },
+    calendarButton: {
+        position: 'absolute',
+        top: 20,
+        right: 16,
+        padding: 8,
     },
     modalOverlay: {
         flex: 1,
