@@ -5,11 +5,11 @@ import { useRouter, usePathname } from 'expo-router';
 
 // Example teams data
 const teams = [
-    { id: '1', name: 'New York Yankees', icon: 'https://upload.wikimedia.org/wikipedia/commons/2/25/New_York_Yankees_logo.svg' },
-    { id: '2', name: 'Boston Red Sox', icon: 'https://upload.wikimedia.org/wikipedia/commons/8/8c/Boston_Red_Sox_cap_logo.svg' },
-    { id: '3', name: 'Los Angeles Dodgers', icon: 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Los_Angeles_Dodgers_logo.svg' },
-    { id: '4', name: 'Chicago Cubs', icon: 'https://upload.wikimedia.org/wikipedia/commons/8/81/Chicago_Cubs_logo.svg' },
-    { id: '5', name: 'Houston Astros', icon: 'https://upload.wikimedia.org/wikipedia/commons/5/5b/Houston_Astros_logo.svg' },
+    { id: '1', name: 'New York Yankees', icon:require('../assets/images/yankeesicon.png'), headcoach:"Marcus Walberg", record: "0-0" },
+    { id: '2', name: 'Boston Red Sox', icon:require('../assets/images/BRSicon.png'), headcoach:"John Henry", record: "0-0" },
+    { id: '3', name: 'Los Angeles Dodgers', icon:require('../assets/images/LADodgers.png'),headcoach:"Marcus Walberg", record: "0-0"  },
+    { id: '4', name: 'Chicago Cubs', icon:require('../assets/images/chicagocubs.png'),headcoach:"Marcus Walberg", record: "0-0" },
+    { id: '5', name: 'Houston Astros', icon:require('../assets/images/houstonAstrosIcon.png'),headcoach:"Marcus Walberg", record: "0-0" },
 ];
 
 interface HeaderProps {
@@ -40,6 +40,7 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
                 source={{ uri: item.icon }}
                 style={styles.teamIcon}
             />
+            
             <Text style={styles.teamName}>{item.name}</Text>
         </TouchableOpacity>
     );
@@ -56,11 +57,20 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
 
             <View style={styles.currentTeam}>
                 <Image
-                    source={{ uri: selectedTeam.icon }}
+                    source={selectedTeam.icon}
                     style={styles.currentTeamIcon}
+                    onError={(e) => console.log('Failed to load Yankees logo:', e.nativeEvent.error)}
                 />
-                <Text style={styles.currentTeamName}>{selectedTeam.name}</Text>
+               
+                <Text style={styles.currentTeamName}>{selectedTeam.name}{'\n'}</Text>
+                
+                
             </View>
+            <View style={styles.currentTeamStats}>
+                <Text style={styles.currentTeamCoach}>Head Coach: {selectedTeam.headcoach}</Text>
+                <Text style={styles.currentTeamrecord}>Record: {selectedTeam.record}</Text>
+            </View>
+            
 
             <TouchableOpacity 
                 style={styles.calendarButton}
@@ -137,6 +147,18 @@ const styles = StyleSheet.create({
     },
     currentTeamName: {
         fontSize: 24,
+        fontWeight: '600',
+    },
+    currentTeamStats: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    currentTeamCoach: {
+        fontSize: 18,
+        fontWeight: '600',
+    },
+    currentTeamrecord: {
+        fontSize: 18,
         fontWeight: '600',
     },
     calendarButton: {
