@@ -1,6 +1,10 @@
 import { Text,Image, StyleSheet, Platform, View, TextInput, TouchableOpacity, Button } from 'react-native';
+import Header from '../header';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
 
 const HomeScreen = () => {
+
+  
   
   return (
     <View style={styles.container}>

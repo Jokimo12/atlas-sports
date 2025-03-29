@@ -2,7 +2,6 @@ import { Dimensions, View, Text, StyleSheet, Image, TextInput, Button, Touchable
 import React, {useState, useCallback, useEffect, useRef} from 'react';
 import { GiftedChat, IMessage, Bubble, Send, InputToolbar } from 'react-native-gifted-chat';
 import { rgbaColor } from 'react-native-reanimated/lib/typescript/Colors';
-import Header from '../header';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { Audio } from 'expo-av';
@@ -13,7 +12,6 @@ const ChatScreen = () => {
     const [recording, setRecording] = useState<Audio.Recording | null>(null);
     const [isRecording, setIsRecording] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [currentTeam, setCurrentTeam] = useState('New York Yankees');
     const audioRef = useRef<Audio.Sound | null>(null);
 
     useEffect(() => {
@@ -41,12 +39,6 @@ const ChatScreen = () => {
             }
         })();
     }, []);
-
-    const handleTeamChange = (team: string) => {
-        setCurrentTeam(team);
-        // Here you can add logic to load team-specific chat data
-        console.log('Team changed to:', team);
-    };
 
     const onSend = useCallback((messages: IMessage[] = []) => {
         setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
@@ -251,7 +243,6 @@ const ChatScreen = () => {
 
     return(
         <View style={styles.container}>
-            <Header currentTeam={currentTeam} onTeamChange={handleTeamChange} />
             <View style={styles.chat}>
                 <GiftedChat 
                     messages={messages}

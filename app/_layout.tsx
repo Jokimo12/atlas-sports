@@ -3,9 +3,10 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
 import 'react-native-reanimated';
+import Header from './header';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -18,6 +19,7 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+  const [currentTeam, setCurrentTeam] = useState('New York Yankees');
 
   useEffect(() => {
     if (loaded) {
@@ -26,16 +28,27 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  const handleTeamChange = (team: string) => {
+    setCurrentTeam(team);
+    // Here you can add logic to load team-specific data
+    console.log('Team changed to:', team);
+  };
+
   if (!loaded) {
     return null;
   }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="signup" options={{ title: 'Signup' }} />
+      <Stack
+        screenOptions={{
+          header: () => <Header currentTeam={currentTeam} onTeamChange={handleTeamChange} />,
+          headerShown: true,
+        }}
+      >
+        <Stack.Screen name="signup" options={{ title: 'Signup', headerShown: false }} />
+        <Stack.Screen name="login" options={{ title: 'Login', headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: true }} />
-        <Stack.Screen name="login" options={{ title: 'Login' }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

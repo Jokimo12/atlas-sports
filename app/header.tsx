@@ -17,7 +17,7 @@ interface HeaderProps {
 }
 
 const { height: screenHeight } = Dimensions.get('window');
-const headerHeight = screenHeight * 0.25; // 25% of screen height
+const headerHeight = screenHeight * 0.2; // 20% of screen height instead of 25%
 
 const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
