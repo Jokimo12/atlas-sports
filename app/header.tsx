@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, Image, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter, usePathname } from 'expo-router';
+import { useRouter, usePathname, useSegments } from 'expo-router';
 
 // Example teams data
 const teams = [
@@ -24,7 +24,25 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
-    const isCalendarScreen = pathname === '/calendar';
+    const segments = useSegments();
+    const isCalendarScreen = segments[1] === 'calendar';
+    const ref = useRef(pathname);
+
+    useEffect(() => {
+        if (!isCalendarScreen) {
+            ref.current = pathname;
+        }
+    }, [pathname, isCalendarScreen]);
+
+    const handleNavigation = () => {
+        if (isCalendarScreen) {
+            console.log('Navigating back to:', ref.current);
+            router.push(ref.current as any);
+        } else {
+            console.log('Navigating to calendar');
+            router.push('/(tabs)/calendar' as any);
+        }
+    };
 
     const selectedTeam = teams.find(team => team.name === currentTeam) || teams[0];
 
@@ -74,7 +92,7 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
 
             <TouchableOpacity 
                 style={styles.calendarButton}
-                onPress={() => router.push(isCalendarScreen ? '/(tabs)' : 'calendar' as any)}
+                onPress={handleNavigation}
             >
                 <Ionicons 
                     name={isCalendarScreen ? "home" : "calendar"} 

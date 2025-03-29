@@ -185,12 +185,12 @@ const ChatScreen = () => {
                 {...props}
                 wrapperStyle={{
                     right: {
-                        backgroundColor: '#a684fa',
+                        backgroundColor: '#20005c',
                         borderRadius: 20,
                         padding: 5,
                     },
                     left: {
-                        backgroundColor: '#c9cefe',
+                        backgroundColor: '#ebe5ef',
                         borderRadius: 20,
                         padding: 5,
                     },
@@ -216,6 +216,10 @@ const ChatScreen = () => {
                     borderTopWidth: 1,
                     borderTopColor: '#e0e0e0',
                     padding: 8,
+                    paddingBottom: Platform.OS === 'ios' ? 8 : 4,
+                    borderRadius: 20,
+                    marginHorizontal: 8,
+                    marginBottom: 8,
                 }}
             />
         );
@@ -225,7 +229,7 @@ const ChatScreen = () => {
         return (
             <View style={styles.actionsContainer}>
                 <TouchableOpacity onPress={pickImage} style={styles.actionButton}>
-                    <Ionicons name="image" size={24} color="#a684fa" />
+                    <Ionicons name="image" size={24} color="#20005c" />
                 </TouchableOpacity>
                 <TouchableOpacity 
                     onPress={isRecording ? stopRecording : startRecording} 
@@ -234,10 +238,22 @@ const ChatScreen = () => {
                     <Ionicons 
                         name={isRecording ? "stop-circle" : "mic"} 
                         size={24} 
-                        color={isRecording ? "#ff4444" : "#a684fa"} 
+                        color={isRecording ? "#ff4444" : "#20005c"} 
                     />
                 </TouchableOpacity>
             </View>
+        );
+    };
+
+    const renderSend = (props: any) => {
+        return (
+            <Send {...props}>
+                <View style={styles.sendButton}>
+                    <View style={styles.sendButtonContainer}>
+                        <Ionicons name="send" size={24} color="#20005c" />
+                    </View>
+                </View>
+            </Send>
         );
     };
 
@@ -254,6 +270,7 @@ const ChatScreen = () => {
                     renderInputToolbar={renderInputToolbar}
                     renderActions={renderActions}
                     renderMessageAudio={renderMessageAudio}
+                    renderSend={renderSend}
                     alwaysShowSend
                     renderAvatar={null}
                     renderTime={() => null}
@@ -268,11 +285,11 @@ const {height} = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#c9cefe',
     },
     chat: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#c9cefe',
     },
     actionsContainer: {
         flexDirection: 'row',
@@ -291,10 +308,10 @@ const styles = StyleSheet.create({
         maxWidth: '80%',
     },
     audioContainerLeft: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#ebe5ef',
     },
     audioContainerRight: {
-        backgroundColor: '#a684fa',
+        backgroundColor: '#20005c',
     },
     audioButton: {
         marginRight: 8,
@@ -307,7 +324,19 @@ const styles = StyleSheet.create({
     },
     audioTextRight: {
         color: '#fff',
-    }
+    },
+    sendButton: {
+        marginRight: 8,
+        marginBottom: 4,
+    },
+    sendButtonContainer: {
+        backgroundColor: '#ebe5ef',
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 export default ChatScreen;
