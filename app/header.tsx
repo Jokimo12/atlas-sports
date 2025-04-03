@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, Image, Dimensions, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, usePathname, useSegments } from 'expo-router';
 
@@ -64,7 +64,7 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
     );
 
     return (
-        <View style={styles.header}>
+        <SafeAreaView style={styles.header}>
             <TouchableOpacity
                 style={styles.teamSelector}
                 onPress={() => setIsDropdownVisible(true)}
@@ -112,7 +112,7 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
                     activeOpacity={1}
                     onPress={() => setIsDropdownVisible(false)}
                 >
-                    <View style={styles.dropdownContainer}>
+                    <SafeAreaView style={styles.dropdownContainer}>
                         <View style={styles.dropdownHeader}>
                             <Text style={styles.dropdownTitle}>Select Team</Text>
                             <TouchableOpacity onPress={() => setIsDropdownVisible(false)}>
@@ -125,10 +125,10 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
                             keyExtractor={item => item.id}
                             style={styles.teamList}
                         />
-                    </View>
+                    </SafeAreaView>
                 </TouchableOpacity>
             </Modal>
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         borderBottomWidth: 1,
         borderBottomColor: '#e0e0e0',
+        justifyContent: 'center'
     },
     teamSelector: {
         flexDirection: 'row',
@@ -168,6 +169,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     currentTeamStats: {
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
     },
