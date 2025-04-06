@@ -14,6 +14,18 @@ interface EventProps {
 }
 
 const Event: React.FC<EventProps> = ({ date, opponent, location, time, checkIn, checkOut, coachesNotes }) => {
+  const [expanded, setExpanded] = React.useState(false);
+
+  //TO-DO: handle 'in' button press
+  const handleInButtonPress = () => {
+
+  }
+
+  //TO-DO: handle 'out' button press
+  const handleOutButtonPress = () => {
+
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.info}>
@@ -37,8 +49,23 @@ const Event: React.FC<EventProps> = ({ date, opponent, location, time, checkIn, 
         <Text style={styles.checkOutText}>Out: {checkOut} </Text>
         
       </View>
-      
-      
+
+      {expanded && (
+        <View style={styles.attendanceButtonsContainer}>
+          <TouchableOpacity style={styles.inButton} onPress={() => handleInButtonPress()}>
+            <Ionicons name={'checkmark'}></Ionicons>
+            <Text>In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.outButton} onPress={() => handleOutButtonPress()}>
+            <Ionicons name={'close'}></Ionicons>
+            <Text>Out</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      <TouchableOpacity style={styles.expandArrowButton} onPress={() => setExpanded(!expanded)}>
+        <Ionicons name={expanded ? "chevron-up" : "chevron-down"} size={24}></Ionicons>
+      </TouchableOpacity>
     
     </View>
   );
@@ -93,6 +120,35 @@ const styles = StyleSheet.create({
   checkOutText: {
     color: 'red'
   },
+  attendanceButtonsContainer: {
+    width:'100%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  inButton: {
+    backgroundColor: '#90EE90',
+    padding: 12,
+    borderRadius: 8,
+    flexDirection: 'row',
+    minWidth: 60,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  }, 
+  outButton: {
+    backgroundColor: 'red',
+    padding: 12,
+    borderRadius: 8,
+    flexDirection: 'row',
+    minWidth: 60,
+    alignItems: 'center',
+    justifyContent: 'space-evenly'
+  },
+  expandArrowButton: {
+    position: 'absolute',
+    bottom: 12,
+    right: 12,
+    padding: 4
+  }
 });
 
 export default Event;

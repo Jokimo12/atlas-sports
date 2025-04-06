@@ -1,4 +1,4 @@
-import { Text,Image, StyleSheet, Platform, View, TextInput, TouchableOpacity, Button } from 'react-native';
+import { Text,Image, StyleSheet, Platform, View, TextInput, TouchableOpacity, Button, SafeAreaView } from 'react-native';
 import Header from '../header';
 import React, {useState, useCallback, useEffect, useRef} from 'react';
 import Event from '../event'
@@ -8,7 +8,7 @@ const HomeScreen = () => {
   
   
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.upNext}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Up Next: </Text>
@@ -34,7 +34,7 @@ const HomeScreen = () => {
         </View>
       </View>
       
-    </View>
+    </SafeAreaView>
   );
 }
 
