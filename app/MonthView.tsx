@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, format, isSameMonth, isToday } from 'date-fns';
+import { useRouter } from 'expo-router';
+import { exampleEvents } from '../data/exampleEvents';
 
 interface MonthViewProps {
   date: Date;
@@ -9,6 +11,7 @@ interface MonthViewProps {
 const MonthView: React.FC<MonthViewProps> = ({ date }) => {
   const startDate = startOfWeek(startOfMonth(date), { weekStartsOn: 0 }); // Sunday
   const endDate = endOfWeek(endOfMonth(date), { weekStartsOn: 0 });
+  const router = useRouter();
 
   const dayList = [];
   let currentDay = startDate;
@@ -17,6 +20,13 @@ const MonthView: React.FC<MonthViewProps> = ({ date }) => {
     dayList.push(currentDay);
     currentDay = addDays(currentDay, 1);
   }
+
+  const handleDayPress = (day: Date) => {
+    if (isSameMonth(day, date)) {
+      const dateString = format(day, 'yyyy-MM-dd');
+      router.push(`/dayDetail?date=${dateString}`);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -31,18 +41,32 @@ const MonthView: React.FC<MonthViewProps> = ({ date }) => {
       <View style={styles.daysGrid}>
         {dayList.map((day) => {
           const isCurrentMonth = isSameMonth(day, date);
+          const dateString = format(day, 'yyyy-MM-dd');
+          const hasEvents = isCurrentMonth && exampleEvents[dateString]?.length > 0;
+          
           return (
-            <View key={day.toISOString()} style={styles.dayContainer}>
-              <Text
-                style={[
-                  styles.dayText,
-                  { color: isCurrentMonth ? 'black' : 'lightgray' },
-                  isToday(day) && styles.today,
-                ]}
-              >
-                {format(day, 'd')}
-              </Text>
-            </View>
+            <TouchableOpacity
+              key={day.toISOString()}
+              style={styles.dayContainer}
+              onPress={() => handleDayPress(day)}
+              disabled={!isCurrentMonth}
+            >
+              <View style={[
+                styles.dayContent,
+                isToday(day) && styles.today,
+                hasEvents && styles.hasEvents
+              ]}>
+                <Text
+                  style={[
+                    styles.dayText,
+                    { color: isCurrentMonth ? 'black' : 'lightgray' },
+                  ]}
+                >
+                  {format(day, 'd')}
+                </Text>
+                {hasEvents && <View style={styles.eventDot} />}
+              </View>
+            </TouchableOpacity>
           );
         })}
       </View>
@@ -81,12 +105,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  dayContent: {
+    width: '80%',
+    height: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
   dayText: {
     fontSize: 16,
   },
   today: {
     backgroundColor: 'lightblue',
     borderRadius: 20,
-    padding: 5,
+  },
+  hasEvents: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 20,
+  },
+  eventDot: {
+    position: 'absolute',
+    bottom: 4,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#007AFF',
   },
 });
