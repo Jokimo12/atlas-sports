@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, Image, Dimensions, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, usePathname, useSegments } from 'expo-router';
 
@@ -64,14 +64,27 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
     );
 
     return (
-        <View style={styles.header}>
-            <TouchableOpacity
-                style={styles.teamSelector}
-                onPress={() => setIsDropdownVisible(true)}
-            >
-                <Text style={styles.teamSelectorText}>Teams</Text>
-                <Ionicons name="chevron-down" size={20} color="#000" />
-            </TouchableOpacity>
+        <SafeAreaView style={styles.header}>
+            <View style={styles.topContainer}>
+                <TouchableOpacity
+                    style={styles.teamSelector}
+                    onPress={() => setIsDropdownVisible(true)}
+                >
+                    <Text style={styles.teamSelectorText}>Teams</Text>
+                    <Ionicons name="chevron-down" size={20} color="#000" />
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                    style={styles.calendarButton}
+                    onPress={handleNavigation}
+                >
+                    <Ionicons 
+                        name={isCalendarScreen ? "home" : "calendar"} 
+                        size={24} 
+                        color="#000" 
+                    />
+                </TouchableOpacity>
+            </View>
 
             <View style={styles.currentTeam}>
                 <Image
@@ -90,16 +103,6 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
             </View>
             
 
-            <TouchableOpacity 
-                style={styles.calendarButton}
-                onPress={handleNavigation}
-            >
-                <Ionicons 
-                    name={isCalendarScreen ? "home" : "calendar"} 
-                    size={24} 
-                    color="#000" 
-                />
-            </TouchableOpacity>
 
             <Modal
                 visible={isDropdownVisible}
@@ -128,13 +131,13 @@ const Header: React.FC<HeaderProps> = ({ currentTeam, onTeamChange }) => {
                     </View>
                 </TouchableOpacity>
             </Modal>
-        </View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     header: {
-        height: headerHeight,
+        // height: headerHeight,
         backgroundColor: '#a0acef',
         flexDirection: 'column',
         paddingHorizontal: 16,
@@ -170,6 +173,7 @@ const styles = StyleSheet.create({
     currentTeamStats: {
         alignItems: 'center',
         justifyContent: 'center',
+        paddingBottom: 16
     },
     currentTeamCoach: {
         fontSize: 18,
@@ -179,11 +183,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
     },
+    topContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
     calendarButton: {
-        position: 'absolute',
-        top: 20,
-        right: 16,
-        padding: 8,
+        padding: 16
     },
     modalOverlay: {
         flex: 1,
