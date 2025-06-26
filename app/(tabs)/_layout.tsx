@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import Header from '../header';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const [currentTeam, setCurrentTeam] = useState('New York Yankees');
+
+  const handleTeamChange = (team: string) => {
+    setCurrentTeam(team);
+    console.log('Team changed to:', team);
+  };
 
   return (
     <Tabs screenOptions={{
@@ -16,7 +23,8 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
-          headerShown: false,
+          headerShown: true,
+          header: () => <Header currentTeam={currentTeam} onTeamChange={handleTeamChange} />,
           tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
         }}
       />
