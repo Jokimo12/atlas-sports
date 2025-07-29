@@ -23,8 +23,9 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
-          headerShown: true,
-          header: () => <Header currentTeam={currentTeam} onTeamChange={handleTeamChange} />,
+          headerShown: false,
+          // headerShown: true,
+          // header: () => <Header currentTeam={currentTeam} onTeamChange={handleTeamChange} />,
           tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
         }}
       />
