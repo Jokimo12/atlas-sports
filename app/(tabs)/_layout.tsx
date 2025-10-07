@@ -37,7 +37,7 @@ export default function TabLayout() {
           headerShown: false,
           tabBarIcon: ({ color, size }) => <Ionicons name="cart" size={size} color={color} />,
         }}
-      />*/
+      />
       <Tabs.Screen
         name="chat"
         options={{

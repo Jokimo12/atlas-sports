@@ -1,4 +1,4 @@
-import { Text,Image, StyleSheet, Platform, View, TextInput, TouchableOpacity, Pressable, ScrollView, SafeAreaView } from 'react-native';
+import { Text,Image, StyleSheet, Platform, View, FlatList, TextInput, TouchableOpacity, Pressable, ScrollView, SafeAreaView } from 'react-native';
 import Header from '../header';
 import React, {useState, useCallback, useEffect, useRef} from 'react';
 import Event from '../event'
@@ -68,9 +68,13 @@ const HomeScreen = () => {
       <ScrollView>
         <View style={styles.eventsContainer}>
           <Text style={styles.subheaderText}>Nearby Activities and Events</Text>
-          <View style={styles.cardListContainer}>
-            {events.map((event) => (
-              <View key={event.activityName} style={styles.card}>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={events}
+            keyExtractor={(item) => item.activityName}
+            renderItem={({ item: event }) => (
+              <View style={styles.card}>
                 <Text style={styles.cardTitleText}>{event.activityName}</Text>
                 <View style={styles.calendarContainer}>
                   <Ionicons name='calendar-outline' size={16}/>
@@ -87,17 +91,22 @@ const HomeScreen = () => {
                   <Text style={styles.geminiButtonText}>Get Details & Tips</Text>
                 </Pressable>
               </View>
-            ))}
-          </View>
+            )}
+            contentContainerStyle={styles.cardListContent}
+          />
         </View>
         <View>
           <Text style={styles.subheaderText}>Train at Home</Text>
-          <View style={styles.cardListContainer}>
-            {trainings.map((training) => (
-              <View key={training.trainingName} style={styles.card}>
-                <Text style={styles.cardTitleText}>{training.trainingName}</Text>
-                <Text>{training.description}</Text>
-                <Text style={styles.label}>{training.trainingType}</Text>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={trainings}
+            keyExtractor={(trainings) => trainings.trainingName}
+            renderItem={({ item: trainings }) => (
+              <View style={styles.card}>
+                <Text style={styles.cardTitleText}>{trainings.trainingName}</Text>
+                <Text>{trainings.description}</Text>
+                <Text style={styles.label}>{trainings.trainingType}</Text>
                 <Pressable 
                   style={styles.geminiButton}
                   onPress={() => console.log('Gemini output here')}
@@ -105,8 +114,9 @@ const HomeScreen = () => {
                   <Text style={styles.geminiButtonText}>Customize Drill</Text>
                 </Pressable>
               </View>
-            ))}
-          </View>
+            )}
+            contentContainerStyle={styles.cardListContent}
+          />
         </View>
         <View>
           <View style={styles.gearHeadingContainer}>
@@ -118,9 +128,13 @@ const HomeScreen = () => {
                 <Text style={styles.geminiButtonText}>What Gear Do I Need?</Text>
               </Pressable>
           </View>
-          <View style={styles.cardListContainer}>
-            {gear.map((gear) => (
-              <View key={gear.title} style={styles.card}>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={gear}
+            keyExtractor={(gear) => gear.title}
+            renderItem={({ item: gear }) => (
+              <View style={styles.card}>
                 <Text style={styles.cardTitleText}>{gear.title}</Text>
                 <View style={styles.locationContainer}>
                   <Ionicons name='location-sharp' size={16} />
@@ -128,8 +142,9 @@ const HomeScreen = () => {
                 </View>
                 <Text style={styles.label}>{gear.type}</Text>
               </View>
-            ))}
-          </View>
+            )}
+            contentContainerStyle={styles.cardListContent}
+          />
         </View>
       </ScrollView>
       
@@ -145,12 +160,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 8,
     padding: 16,
-    margin: 8
+    margin: 8,
+    marginRight: 12,
   },
   cardListContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap'
   },
+  cardListContent: {
+  paddingHorizontal: 16,
+  gap: 12 // spacing between cards
+  },
+
   cardTitleText: {
     fontWeight: 'bold',
     fontSize: 16
