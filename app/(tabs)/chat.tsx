@@ -7,7 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 
-const Chat = () => {
+export default function Chat ()  {
     const [messages, setMessages] = useState<IMessage[]>([]);
     const [recording, setRecording] = useState<Audio.Recording | null>(null);
     const [isRecording, setIsRecording] = useState(false);
@@ -339,4 +339,3 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Chat;
