@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, FlatList, Image, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { teams } from './teams';
+import { teams } from '@/constants/teams';
 
 interface TeamDropdownProps {
     isVisible: boolean;

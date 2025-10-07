@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Modal } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import TeamDropdown from './teamDropdown';
-import { teams } from './teams';
+import { teams } from '@/constants/teams';
 
 interface HeaderProps {
   currentTeam?: string;
@@ -63,7 +63,7 @@ export default function Header({ currentTeam = 'New York Yankees', onTeamChange 
         size={24}
         color="#a0acef"
         style={styles.calendar}
-        onPress={() => router.push('(tabs)/calendar')}
+        onPress={() => router.push('./(tabs)/calendar')}
       />
       
       <FontAwesome6 
