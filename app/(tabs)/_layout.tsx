@@ -29,14 +29,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="products"
-        options={{
-          title: "Products",
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => <Ionicons name="cart" size={size} color={color} />,
-        }}
-      />
+   
       <Tabs.Screen
         name="chat"
         options={{
